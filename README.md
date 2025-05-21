@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+Product Hunt- README
+Overview
+This project is a Product Hunt clone built with ReactJS. It features a responsive interface displaying a list of products with upvote functionality and detailed product pages.
+Technologies Used
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ReactJS
+React Router for navigation
+Styled Components for styling
+Jest and React Testing Library for unit tests
 
-## Available Scripts
+Features
 
-In the project directory, you can run:
+Product listing with popularity sorting
+Product details view
+Upvoting mechanism
+Responsive UI similar to Product Hunt
 
-### `npm start`
+Project Structure
+The application follows a component-based architecture:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+components/ - Reusable UI components
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Header/ - App header with search functionality
+TabBar/ - Navigation tabs (Popular/Newest)
+ProductCard/ - Card displaying product info in lists
+ProductList/ - Container for product cards
+ProductDetail/ - Detailed view of a product
+common/ - Shared UI elements (Button, Badge, etc.)
 
-### `npm test`
+pages/ - Page components
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+HomePage.jsx - Main product listing page
+DetailPage.jsx - Product details page
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+hooks/ - Custom React hooks
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+useProducts.js - Product data management
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+utils/ - Helper functions
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Implementation Details
+Styling
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Used styled-components for component-specific styling
+Created a global theme for consistent colors, spacing, and typography
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+State Management
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Used React hooks (useState, useEffect) for local state
+Created custom hook (useProducts) to manage product data
 
-## Learn More
+Routing
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Implemented React Router for navigation between views
+Added route parameters for product details (/product/:id)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Testing
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Unit tests for all components using Jest and React Testing Library
+Test utilities for common testing patterns
