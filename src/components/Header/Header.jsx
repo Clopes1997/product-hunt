@@ -5,7 +5,10 @@ import {
   SearchBar,
   DateInput,
   SearchIcon,
-  DateDisplay
+  DateDisplay,
+  CalendarIcon,
+  FilterLabel,
+  FilterBadge
 } from './Header.styles';
 
 const Header = ({ onDateFilter, clearDateFilter }) => {
@@ -74,25 +77,40 @@ const Header = ({ onDateFilter, clearDateFilter }) => {
   return (
     <HeaderContainer>
       <ProfileImage src="https://placecats.com/40/40" alt="Profile" />
-      <SearchBar data-focused={isFocused}>
+      <SearchBar data-focused={isFocused} data-filtering={isFiltering}>
+        <FilterLabel>Filter by date</FilterLabel>
         <DateInput
           type="date"
           value={dateInput}
           onChange={handleInputChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          aria-label="Select date to filter products"
         />
-        <DateDisplay data-active={!isFocused}>{displayDate}</DateDisplay>
-        <SearchIcon onClick={handleDateSearch}>
+        <CalendarIcon>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M16 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M8 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M3 10H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </CalendarIcon>
+        <DateDisplay data-active={!isFocused} data-filtering={isFiltering}>
+          {displayDate}
+        </DateDisplay>
+        {isFiltering && (
+          <FilterBadge>Filtered</FilterBadge>
+        )}
+        <SearchIcon onClick={handleDateSearch} aria-label={isFiltering ? "Clear date filter" : "Apply date filter"}>
           {isFiltering ? (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18" stroke="#6f6f6f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M6 6L18 18" stroke="#6f6f6f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           ) : (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#6f6f6f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M21 21L16.65 16.65" stroke="#6f6f6f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           )}
         </SearchIcon>

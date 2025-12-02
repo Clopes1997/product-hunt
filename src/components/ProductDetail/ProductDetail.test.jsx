@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import ProductDetail from './ProductDetail';
 
@@ -41,9 +41,9 @@ const theme = {
 const renderWithThemeAndRouter = (component) => {
   return render(
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
+      <HashRouter>
         {component}
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   );
 };

@@ -17,7 +17,6 @@ import {
   ProductHeaderInfo,
   OptionsDropdown,
   OptionItem,
-  MainProductImage,
 } from './ProductDetail.styles';
 import useProducts from '../../hooks/useProducts';
 
@@ -57,20 +56,20 @@ const ProductDetail = ({ product }) => {
 
   return (
     <ProductDetailContainer ref={containerRef}>
-      <BackButton>
+      <BackButton title="Back to home">
         <Link to="/">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 12H5" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M12 19L5 12L12 5" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </Link>
       </BackButton>
 
-      <Options onClick={toggleOptions}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="1" fill="black"/>
-          <circle cx="12" cy="6" r="1" fill="black"/>
-          <circle cx="12" cy="18" r="1" fill="black"/>
+      <Options onClick={toggleOptions} title="More options">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+          <circle cx="12" cy="6" r="1.5" fill="currentColor"/>
+          <circle cx="12" cy="18" r="1.5" fill="currentColor"/>
         </svg>
         
         {showOptions && (
@@ -83,8 +82,6 @@ const ProductDetail = ({ product }) => {
       </Options>
 
       <ProductDetailContent>
-        <MainProductImage src={product.thumbnail} alt={product.name} />
-
         <ProductHeader>
           <ProductLogo src={product.thumbnail} alt={`${product.name} logo`} />
           <ProductHeaderInfo>

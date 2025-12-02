@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import ProductCard from './ProductCard';
 
@@ -35,9 +35,9 @@ const mockProduct = {
 const renderWithTheme = (component) => {
   return render(
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
+      <HashRouter>
         {component}
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   );
 };
