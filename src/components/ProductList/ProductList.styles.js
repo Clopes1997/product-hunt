@@ -9,15 +9,6 @@ const spin = keyframes`
   }
 `;
 
-const pulse = keyframes`
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-`;
-
 export const ProductListContainer = styled.div`
   padding: 12px 0;
   max-width: 100%;
