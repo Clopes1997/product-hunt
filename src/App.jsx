@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from './GlobalStyles';
+import PhoneFrame from './components/PhoneFrame/PhoneFrame';
 import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
 
@@ -67,12 +68,14 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/product/:id" element={<DetailPage />} />
-        </Routes>
-      </Router>
+      <PhoneFrame>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/product/:id" element={<DetailPage />} />
+          </Routes>
+        </Router>
+      </PhoneFrame>
     </ThemeProvider>
   );
 }

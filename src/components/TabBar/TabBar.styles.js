@@ -8,6 +8,7 @@ export const TabBarContainer = styled.div`
   position: sticky;
   top: 0;
   z-index: 5;
+  flex-shrink: 0;
 `;
 
 export const Tab = styled.div`

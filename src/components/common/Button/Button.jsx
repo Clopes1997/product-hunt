@@ -16,6 +16,9 @@ const ButtonComponent = styled.button`
   transition: all ${props => props.theme.transitions.normal};
   position: relative;
   overflow: hidden;
+  box-shadow: ${props => props['data-primary'] 
+    ? '0 4px 12px rgba(255, 97, 84, 0.3), 0 2px 6px rgba(255, 97, 84, 0.2)' 
+    : '0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.08)'};
 
   &::before {
     content: '';
@@ -29,7 +32,9 @@ const ButtonComponent = styled.button`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${props => props.theme.shadows.buttonHover};
+    box-shadow: ${props => props['data-primary']
+      ? '0 6px 20px rgba(255, 97, 84, 0.4), 0 4px 12px rgba(255, 97, 84, 0.3)'
+      : '0 4px 16px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1)'};
     border-color: ${props => props.theme.colors.primary};
     background-color: ${props => props['data-primary'] ? props.theme.colors.primaryHover : props.theme.colors.primary};
     color: white;
@@ -41,6 +46,9 @@ const ButtonComponent = styled.button`
 
   &:active {
     transform: translateY(0);
+    box-shadow: ${props => props['data-primary']
+      ? '0 2px 8px rgba(255, 97, 84, 0.3), 0 1px 4px rgba(255, 97, 84, 0.2)'
+      : '0 1px 4px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.08)'};
   }
 `;
 

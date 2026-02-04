@@ -10,8 +10,9 @@ const spin = keyframes`
 `;
 
 export const ProductListContainer = styled.div`
-  padding: 12px 0;
+  padding: 12px 16px;
   max-width: 100%;
+  padding-bottom: 20px;
 `;
 
 export const LoadingMessage = styled.div`

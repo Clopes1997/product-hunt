@@ -1,46 +1,45 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import {
   HeaderContainer,
   ProfileImage,
   SearchBar,
-  DateInput,
   SearchIcon,
   DateDisplay,
   CalendarIcon,
   FilterLabel,
-  FilterBadge
+  FilterBadge,
+  StyledDatePickerWrapper,
+  CustomDateInput
 } from './Header.styles';
 
 const Header = ({ onDateFilter, clearDateFilter }) => {
-  const [dateInput, setDateInput] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
   const [displayDate, setDisplayDate] = useState('');
   const [isFiltering, setIsFiltering] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
 
-  const parseDateInput = (dateString) => {
-    const [year, month, day] = dateString.split('-');
-    return new Date(year, month - 1, day); // Local time, no timezone issues
-  };
+  const searchBarRef = useRef(null);
 
   const getFormattedLabel = useCallback((date) => {
-    const inputDate = new Date(date);
+    if (!date) return '';
+
+    const d = new Date(date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
 
-    const normalizedDate = new Date(inputDate);
-    normalizedDate.setHours(0, 0, 0, 0);
+    d.setHours(0, 0, 0, 0);
 
-    const options = { month: 'long', day: 'numeric' };
-    const formatted = normalizedDate.toLocaleDateString('en-US', options);
+    const formatted = d.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+    });
 
-    const isToday = normalizedDate.getTime() === today.getTime();
-    const isYesterday = normalizedDate.getTime() === yesterday.getTime();
-
-    if (isToday) return `Today, ${formatted}`;
-    if (isYesterday) return `Yesterday, ${formatted}`;
+    if (d.getTime() === today.getTime()) return `Today, ${formatted}`;
+    if (d.getTime() === yesterday.getTime()) return `Yesterday, ${formatted}`;
     return formatted;
   }, []);
 
@@ -48,69 +47,97 @@ const Header = ({ onDateFilter, clearDateFilter }) => {
     setDisplayDate(getFormattedLabel(new Date()));
   }, [getFormattedLabel]);
 
-  const handleDateSearch = () => {
-    if (isFiltering) {
-      setDateInput('');
-      setDisplayDate(getFormattedLabel(new Date()));
-      setIsFiltering(false);
-      clearDateFilter();
-    } else if (dateInput) {
-      const selectedDate = parseDateInput(dateInput);
-      setDisplayDate(getFormattedLabel(selectedDate));
+  const formatDateForFilter = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    if (date) {
+      setDisplayDate(getFormattedLabel(date));
       setIsFiltering(true);
-      onDateFilter(dateInput);
+      onDateFilter(formatDateForFilter(date));
     }
   };
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setDateInput(value);
-    if (value) {
-      const selectedDate = parseDateInput(value);
-      setDisplayDate(getFormattedLabel(selectedDate));
-    }
+  const handleClearFilter = (e) => {
+    e.stopPropagation();
+    setSelectedDate(null);
+    setDisplayDate(getFormattedLabel(new Date()));
+    setIsFiltering(false);
+    clearDateFilter();
   };
 
-  const handleFocus = () => setIsFocused(true);
-  const handleBlur = () => setIsFocused(false);
+  const CustomInput = React.forwardRef(({ onClick }, ref) => (
+    <CustomDateInput onClick={onClick} ref={ref} readOnly />
+  ));
 
   return (
     <HeaderContainer>
       <ProfileImage src="https://placecats.com/40/40" alt="Profile" />
-      <SearchBar data-focused={isFocused} data-filtering={isFiltering}>
-        <FilterLabel>Filter by date</FilterLabel>
-        <DateInput
-          type="date"
-          value={dateInput}
-          onChange={handleInputChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          aria-label="Select date to filter products"
-        />
+
+      <SearchBar ref={searchBarRef} data-filtering={isFiltering}>
+        <FilterLabel></FilterLabel>
+
+        <StyledDatePickerWrapper>
+          <DatePicker
+            selected={selectedDate}
+            onChange={handleDateChange}
+            customInput={<CustomInput />}
+            dateFormat="MMMM d, yyyy"
+            showPopperArrow={false}
+            popperPlacement="bottom"
+            shouldCloseOnSelect
+            popperContainer={({ children }) => {
+              if (!searchBarRef.current) return children;
+
+              return (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: searchBarRef.current.offsetHeight + 8,
+                    left: 0,
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    zIndex: 9999,
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <div style={{ pointerEvents: 'auto' }}>
+                    {children}
+                  </div>
+                </div>
+              );
+            }}
+          />
+        </StyledDatePickerWrapper>
+
         <CalendarIcon>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M16 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M8 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M3 10H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
+            <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" strokeWidth="2"/>
           </svg>
         </CalendarIcon>
-        <DateDisplay data-active={!isFocused} data-filtering={isFiltering}>
+
+        <DateDisplay data-filtering={isFiltering}>
           {displayDate}
         </DateDisplay>
-        {isFiltering && (
-          <FilterBadge>Filtered</FilterBadge>
-        )}
-        <SearchIcon onClick={handleDateSearch} aria-label={isFiltering ? "Clear date filter" : "Apply date filter"}>
+
+        {isFiltering && <FilterBadge>Filtered</FilterBadge>}
+
+        <SearchIcon onClick={handleClearFilter}>
           {isFiltering ? (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2"/>
             </svg>
           ) : (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
+              <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2"/>
             </svg>
           )}
         </SearchIcon>

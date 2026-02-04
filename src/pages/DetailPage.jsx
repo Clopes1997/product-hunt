@@ -149,7 +149,7 @@ const DetailPage = () => {
   }
 
   return (
-    <div>
+    <div style={{ height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
       <ProductDetail product={product} />
     </div>
   );

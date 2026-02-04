@@ -2,16 +2,19 @@ import styled from 'styled-components';
 
 export const ProductDetailContainer = styled.div`
   background-color: ${props => props.theme.colors.background};
-  padding: 24px;
+  padding: 16px;
   position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-  padding-bottom: 100px;
-  min-height: 100vh;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
   
   @media (min-width: 768px) {
-    padding: 40px;
-    padding-bottom: 120px;
+    padding: 24px;
+    padding-bottom: 24px;
   }
 `;
 
@@ -313,45 +316,35 @@ export const FooterContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 12px 1fr;
   gap: 12px;
-  padding: 20px;
+  padding: 16px;
   background: ${props => props.theme.colors.background};
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08), 0 -2px 8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
   border-top: 1px solid ${props => props.theme.colors.borderLight};
-  position: fixed;
+  position: sticky;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 100;
   transition: all ${props => props.theme.transitions.normal};
+  margin-top: auto;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 24px 24px 0 0;
   
   &[data-at-bottom="true"] {
     position: static;
-    box-shadow: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.08);
     border-top: none;
     margin-top: 32px;
-    padding: 0;
-    background: transparent;
-  }
-
-  /* Center content with max-width */
-  > * {
-    max-width: 900px;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  /* Container itself takes full width */
-  width: 100%;
-  margin: 0;
-  
-  /* Add padding on the sides for larger screens */
-  @media (min-width: 901px) {
-    padding-left: calc((100% - 900px) / 2);
-    padding-right: calc((100% - 900px) / 2);
+    padding: 20px;
+    background: ${props => props.theme.colors.background};
+    border-radius: ${props => props.theme.borderRadius.large};
   }
   
   @media (min-width: 768px) {
-    padding: 24px;
+    padding: 20px;
+    max-width: 700px;
   }
 `;
 
@@ -374,6 +367,9 @@ export const UpvoteButton = styled.button`
   transition: all ${props => props.theme.transitions.normal};
   position: relative;
   overflow: hidden;
+  box-shadow: ${props => props.active
+    ? '0 4px 12px rgba(255, 97, 84, 0.3), 0 2px 6px rgba(255, 97, 84, 0.2)'
+    : '0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.08)'};
 
   &::before {
     content: '';
@@ -387,7 +383,9 @@ export const UpvoteButton = styled.button`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${props => props.theme.shadows.buttonHover};
+    box-shadow: ${props => props.active
+      ? '0 6px 20px rgba(255, 97, 84, 0.4), 0 4px 12px rgba(255, 97, 84, 0.3)'
+      : '0 4px 16px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1)'};
     border-color: ${props => props.theme.colors.primary};
     background-color: ${props => props.active ? props.theme.colors.primaryHover : props.theme.colors.primary};
     color: white;
@@ -399,5 +397,8 @@ export const UpvoteButton = styled.button`
 
   &:active {
     transform: translateY(0);
+    box-shadow: ${props => props.active
+      ? '0 2px 8px rgba(255, 97, 84, 0.3), 0 1px 4px rgba(255, 97, 84, 0.2)'
+      : '0 1px 4px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.08)'};
   }
 `;

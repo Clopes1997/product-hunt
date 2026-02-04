@@ -21,12 +21,17 @@ export const LogoContainer = styled.div`
 `;
 
 export const LogoImage = styled.img`
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   border-radius: ${props => props.theme.borderRadius.medium};
   object-fit: cover;
   border: 2px solid ${props => props.theme.colors.borderLight};
   transition: all ${props => props.theme.transitions.normal};
+  
+  @media (min-width: 768px) {
+    width: 56px;
+    height: 56px;
+  }
 `;
 
 export const ProductInfo = styled.div`
@@ -35,21 +40,32 @@ export const ProductInfo = styled.div`
 `;
 
 export const ProductName = styled.h3`
-  font-size: 17px;
-  margin-bottom: 6px;
+  font-size: 16px;
+  margin-bottom: 4px;
   color: ${props => props.theme.colors.text};
   font-weight: ${props => props.theme.fonts.weight.semibold};
   transition: color ${props => props.theme.transitions.fast};
+  line-height: 1.3;
+  
+  @media (min-width: 768px) {
+    font-size: 17px;
+    margin-bottom: 6px;
+  }
 `;
 
 export const ProductDescription = styled.p`
-  font-size: 14px;
+  font-size: 13px;
   color: ${props => props.theme.colors.textSecondary};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  line-height: 1.5;
+  line-height: 1.4;
+  
+  @media (min-width: 768px) {
+    font-size: 14px;
+    line-height: 1.5;
+  }
 `;
 
 export const UpvoteButton = styled.div`
@@ -68,13 +84,18 @@ export const UpvoteButton = styled.div`
       : props.theme.colors.borderLight
   };
   border-radius: ${props => props.theme.borderRadius.medium};
-  padding: 10px 14px;
+  padding: 8px 12px;
   cursor: pointer;
   transition: all ${props => props.theme.transitions.normal};
-  min-width: 60px;
+  min-width: 56px;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
+  
+  @media (min-width: 768px) {
+    padding: 10px 14px;
+    min-width: 60px;
+  }
 
   &::before {
     content: '';
@@ -127,9 +148,9 @@ export const UpvoteCount = styled.span`
 export const ProductCardContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 16px;
   background-color: ${props => props.theme.colors.background};
-  margin-bottom: 2px;
+  margin-bottom: 12px;
   border: 1px solid ${props => props.theme.colors.borderLight};
   border-radius: ${props => props.theme.borderRadius.medium};
   box-shadow: ${props => props.theme.shadows.card};
